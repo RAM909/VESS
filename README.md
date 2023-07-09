@@ -52,44 +52,7 @@ Then, I modified the ‘TMRpcm.h’ file accordingly, to add the new function to
  	void changespeed(unsigned int newspeed);
 Now, I can call this function from anywhere in my code whenever I want to change the playback speed, if I want to control if from analog0, I just call tmrpcm.changespeed(analogRead(A0));
 
-And the code I uploaded in arduino is:
 
-#include <SD.h> // need to include the SD library
-#define SD_ChipSelectPin 4 //connect pin 4 of arduino to cs pin of sd card
-#include <TMRpcm.h> //Arduino library for asynchronous playback of PCM/WAV files
-#include <SPI.h> //  need to include the SPI library
-
-TMRpcm tmrpcm; // create an object for use in this sketch
-int val;
-int potpin= 0;
-void setup()
-{ 
- 
- tmrpcm.speakerPin = 9; //5,6,11 or 46 on Mega, 9 on Uno, Nano, etc
- Serial.begin(9600);
- if (!SD.begin(SD_ChipSelectPin)) // returns 1 if the card is present
- {
-  Serial.println("SD fail");
-  return;
- }
- tmrpcm.setVolume(5);  //sets volume(0 to 7)  
- tmrpcm.play("song5.wav",2); //the sound file "song" will play each time the arduino powers up, or is reset//i have added the sound of engine so that to get that engine effect.use the name as you saved in SD card I haves saved as song5.
-                     
-                     
-                     
-}
-
-
-void loop()
-{  
-  
-  val = analogRead(potpin);            //reading value from any analog sensors for trial i have used pot
- val = map(val,0,1023,0,800);          //its map tha analog value that is coming from 0 to 1023 TO 0 to 800, or u can map according to you
-  Serial.println(val);
-   
-  tmrpcm.changespeed(val);             //changing tha playback speed.
-
-}
 
 
 
